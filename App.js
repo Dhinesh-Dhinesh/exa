@@ -10,8 +10,6 @@ import Story from "./pages/story";
 
 const Stack = createNativeStackNavigator();
 
-const a = 10;
-
 export default function App() {
   return (
     <NavigationContainer>
