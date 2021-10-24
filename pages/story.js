@@ -9,7 +9,7 @@ import {
 const Story = ({navigation}) => {
     return(
         <View style={styles.cent}>
-            <Text style={styles.txt}>This is Story Page</Text>
+            <Text style={styles.txt}>this is Story Page</Text>
             <Button title="go back" onPress={()=>navigation.goBack()}/>
         </View>
     );
