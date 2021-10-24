@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     btn:{
-        margin: 5,
+        margin: 7,
     }
 });
 
