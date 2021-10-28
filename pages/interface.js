@@ -6,7 +6,7 @@ import {
   StyleSheet,
 } from 'react-native';
 
-const Profile = ({navigation}) => {
+const Interface = ({navigation}) => {
     return(
         <View style={styles.cent}>
             <Text style={styles.txt}>This is Profile Page</Text>
@@ -30,4 +30,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Profile;
+export default Interface;

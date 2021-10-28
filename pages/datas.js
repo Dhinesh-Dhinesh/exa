@@ -6,7 +6,7 @@ import {
   StyleSheet,
 } from 'react-native';
 
-const Followers = ({navigation}) => {
+const Datas = ({navigation}) => {
     return(
         <View style={styles.cent}>
             <Text style={styles.txt}>This is Followers Page</Text>
@@ -30,4 +30,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Followers;
+export default Datas;

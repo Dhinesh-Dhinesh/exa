@@ -11,10 +11,10 @@ const Home = ({navigation}) => {
         <View style={styles.viewArea}>
             <Text style={styles.txt}>Home Screen</Text>
             <View style={styles.btn}>
-                <Button title="Profile" onPress={()=>navigation.navigate("PROFILE")}/>
+                <Button title="Interface" onPress={()=>navigation.navigate("INTERFACE")}/>
             </View>
             <View style={styles.btn}>
-                <Button title="Followers" onPress={()=>navigation.navigate("FOLLOWERS")}/>
+                <Button title="Datas" onPress={()=>navigation.navigate("DATAS")}/>
             </View>
             <View style={styles.btn}>
                 <Button title="Story" onPress={()=>navigation.navigate("STORY")}/>
