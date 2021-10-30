@@ -9,10 +9,10 @@ import SQLite from 'react-native-sqlite-storage';
 
 const db = SQLite.openDatabase(
     {
-        name:"DhineshDB",
-        location: "default",
+        name:"datab.db",
+        createFromLocation: 1,
     },
-    () => {},
+    () => {console.log("Success")},
     error => {console.log(error)}
 );
 
@@ -29,7 +29,7 @@ const Datas = ({navigation}) => {
         try{
             db.transaction( (tx)=>{
                 tx.executeSql(
-                    "SELECT Email, Pass FROM users",
+                    "SELECT Email, Pass FROM Users",
                     [],
                     (tx, results) => {
                     var len = results.rows.length;
@@ -38,7 +38,6 @@ const Datas = ({navigation}) => {
                         var userPass = results.rows.item(0).Pass;
                         setEmail(userEmail);
                         setPass(userPass);
-                        alert("datas are seated")
                     }
                     }
                 )
@@ -51,8 +50,8 @@ const Datas = ({navigation}) => {
     return(
         <View style={styles.cent}>
             <Text style={styles.txt}>Datas</Text>
-            <Text style={{fontSize:25,marginTop:5,color:"black"}}>Email : {email}</Text>
-            <Text style={{fontSize:25,color:"black"}}>Password : {pass}</Text>
+            <Text style={{fontSize:15,marginTop:5,color:"black"}}>Email : {email}</Text>
+            <Text style={{fontSize:15,color:"black"}}>Password : {pass}</Text>
             <Button title="go back" onPress={()=>navigation.goBack()}/>
         </View>
     );

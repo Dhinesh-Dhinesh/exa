@@ -20,10 +20,10 @@ const Stack = createNativeStackNavigator();
 
 const db = SQLite.openDatabase(
     {
-        name:"MainDB",
-        location: "default",
+        name:"datab.db",
+        createFromLocation: 1,
     },
-    () => {console.log("create")},
+    () => {console.log("Success")},
     error => {console.log(error)}
 );
 
@@ -37,8 +37,8 @@ export default function Interface({navigation}) {
         getDatas();
     }, []);
 
-    const createTable = () => {
-        db.transaction((tx) => {
+    const createTable = async () => {
+        await db.transaction((tx) => {
             tx.executeSql(
                 "CREATE TABLE IF NOT EXISTS"
                 +"Users"
@@ -50,11 +50,14 @@ export default function Interface({navigation}) {
     const setDatas = async () => {
         try{
           if(!pass || !email){
+            alert("none")
             return;
           }
           await db.transaction(async (tx)=>{
-              await tx.executeSql(
-                  "INSERT INTO Users (Email,Pass) VALUES ('" + email + "','" + pass + "')"
+              tx.executeSql(  
+                "UPDATE Users SET Email = ?,Pass =? WHERE ID = 1;",[email,pass],
+                ()=>{},
+                (err)=>{console.log(err)}
               )
           })
         } catch (err) {
@@ -62,7 +65,7 @@ export default function Interface({navigation}) {
         }
     }
 
-    const getDatas = () => {
+    const getDatas = async () => {
         try{
           db.transaction( (tx)=>{     
                 tx.executeSql(
@@ -70,7 +73,6 @@ export default function Interface({navigation}) {
                   [],
                   (tx, results) => {
                     var len = results.rows.length;
-                    alert("assa")
                     if (len > 0){
                         navigation.navigate("DATAS");
                     }
@@ -119,7 +121,6 @@ export default function Interface({navigation}) {
             </View>
             <TouchableOpacity  onPress={setDatas} style={styles.loginButton}>
               <Text style={styles.loginButtonText}>Login</Text>
-              <Text>{email} : {pass}</Text>
             </TouchableOpacity>
           </View>
         </View>
