@@ -23,7 +23,7 @@ const db = SQLite.openDatabase(
         name:"datab.db",
         createFromLocation: 1,
     },
-    () => {console.log("Success")},
+    () => {},
     error => {console.log(error)}
 );
 
