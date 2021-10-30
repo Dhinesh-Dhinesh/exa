@@ -1,15 +1,58 @@
-import * as React from 'react';
+import React,{useState,useEffect} from 'react';
 import {
   View,
   Text,
   Button,
   StyleSheet,
 } from 'react-native';
+import SQLite from 'react-native-sqlite-storage';
+
+const db = SQLite.openDatabase(
+    {
+        name:"DhineshDB",
+        location: "default",
+    },
+    () => {},
+    error => {console.log(error)}
+);
 
 const Datas = ({navigation}) => {
+    
+    const [email,setEmail] = useState("");
+    const [pass,setPass] = useState("");
+
+    useEffect(()=>{
+        getDatas();
+    },[]);
+
+    const getDatas = async () => {
+        try{
+            db.transaction( (tx)=>{
+                tx.executeSql(
+                    "SELECT Email, Pass FROM users",
+                    [],
+                    (tx, results) => {
+                    var len = results.rows.length;
+                    if (len > 0){
+                        var userEmail = results.rows.item(0).Email;
+                        var userPass = results.rows.item(0).Pass;
+                        setEmail(userEmail);
+                        setPass(userPass);
+                        alert("datas are seated")
+                    }
+                    }
+                )
+            })
+        } catch(err){
+          alert(err)
+        }
+    }
+
     return(
         <View style={styles.cent}>
-            <Text style={styles.txt}>This is Followers Page</Text>
+            <Text style={styles.txt}>Datas</Text>
+            <Text style={{fontSize:25,marginTop:5,color:"black"}}>Email : {email}</Text>
+            <Text style={{fontSize:25,color:"black"}}>Password : {pass}</Text>
             <Button title="go back" onPress={()=>navigation.goBack()}/>
         </View>
     );

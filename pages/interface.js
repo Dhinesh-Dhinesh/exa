@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React,{useState,useEffect,} from 'react';
 import {
   StyleSheet,
   Text,
@@ -10,9 +10,79 @@ import {
   Keyboard,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
+import SQLite from 'react-native-sqlite-storage';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-export default function Interface() {
-  return (
+import Datas from "./datas";
+
+const Stack = createNativeStackNavigator();
+
+const db = SQLite.openDatabase(
+    {
+        name:"MainDB",
+        location: "default",
+    },
+    () => {console.log("create")},
+    error => {console.log(error)}
+);
+
+export default function Interface({navigation}) {
+
+    const [email,setEmail] = useState("");
+    const [pass,setPass] = useState("");
+
+    useEffect(()=> {
+        createTable();
+        getDatas();
+    }, []);
+
+    const createTable = () => {
+        db.transaction((tx) => {
+            tx.executeSql(
+                "CREATE TABLE IF NOT EXISTS"
+                +"Users"
+                +"(ID INTEGER PRIMARY KEY AUTOINCREMENT,Email TEXT,Pass TEXT);"
+            )
+        })
+    };
+
+    const setDatas = async () => {
+        try{
+          if(!pass || !email){
+            return;
+          }
+          await db.transaction(async (tx)=>{
+              await tx.executeSql(
+                  "INSERT INTO Users (Email,Pass) VALUES ('" + email + "','" + pass + "')"
+              )
+          })
+        } catch (err) {
+          alert(err)
+        }
+    }
+
+    const getDatas = () => {
+        try{
+          db.transaction( (tx)=>{     
+                tx.executeSql(
+                  "SELECT Email, Pass FROM Users",
+                  [],
+                  (tx, results) => {
+                    var len = results.rows.length;
+                    alert("assa")
+                    if (len > 0){
+                        navigation.navigate("DATAS");
+                    }
+                  }
+            )
+          })
+        } catch(err){
+          alert(err)
+        }
+    }
+
+    return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
         <View style={styles.bigCircle}></View>
@@ -34,6 +104,7 @@ export default function Interface() {
               <TextInput
                 style={styles.input}
                 keyboardType='email-address'
+                onChangeText={(val)=> setEmail(val)}
                 // textContentType='emailAddress'
               />
             </View>
@@ -41,20 +112,14 @@ export default function Interface() {
               <Text style={styles.inputLabel}>Password</Text>
               <TextInput
                 style={styles.input}
+                onChangeText={(val)=> setPass(val)}
                 // secureTextEntry={true}
                 // textContentType='password'
               />
             </View>
-            <TouchableOpacity style={styles.loginButton}>
+            <TouchableOpacity  onPress={setDatas} style={styles.loginButton}>
               <Text style={styles.loginButtonText}>Login</Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Text style={styles.registerText}>
-                Don't have an account? Register Now
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+              <Text>{email} : {pass}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -174,3 +239,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
+
+<NavigationContainer>
+<Stack.Navigator screenOptions={{headerShown:false}}>
+  <Stack.Screen name="INTERFACE" component={Interface} />
+  <Stack.Screen name="DATAS" component={Datas} />
+</Stack.Navigator>
+</NavigationContainer>
