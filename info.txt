@@ -5,3 +5,9 @@ REDUX
 [2] => npm install react-redux
 
 [3] => npm install redux-thunk
+
+
+Import this files in store.js
+
+import {createStore, combineReducers, applyMiddleware} from 'redux';
+import thunk from 'redux-thunk';

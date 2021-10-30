@@ -1,11 +1,14 @@
-import React,{useState,useEffect} from 'react';
+import React,{useEffect} from 'react';
 import {
   View,
   Text,
   Button,
   StyleSheet,
 } from 'react-native';
+
 import SQLite from 'react-native-sqlite-storage';
+import {useSelector, useDispatch} from 'react-redux';
+import {setEmail, setPass} from "../redux/action";
 
 const db = SQLite.openDatabase(
     {
@@ -18,8 +21,8 @@ const db = SQLite.openDatabase(
 
 const Datas = ({navigation}) => {
     
-    const [email,setEmail] = useState("");
-    const [pass,setPass] = useState("");
+    const {email, pass} = useSelector(state=> state.userReducer);
+    const dispatch = useDispatch();
 
     useEffect(()=>{
         getDatas();
@@ -36,8 +39,8 @@ const Datas = ({navigation}) => {
                     if (len > 0){
                         var userEmail = results.rows.item(0).Email;
                         var userPass = results.rows.item(0).Pass;
-                        setEmail(userEmail);
-                        setPass(userPass);
+                        dispatch(setEmail(userEmail));
+                        dispatch(setPass(userPass));
                     }
                     }
                 )
