@@ -45,7 +45,7 @@ export default function Transfer({navigation}) {
 
   const setDatas = async () => {
       try{
-        if(!dispatch(setEmail(email)) || !dispatch(setPass(pass))){
+        if(!email || !pass){
           alert("Please Fill all input fields");
           return;
         }
