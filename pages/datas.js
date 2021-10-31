@@ -5,6 +5,7 @@ import {
   Button,
   StyleSheet,
   FlatList,
+  TouchableOpacity,
 } from 'react-native';
 
 import SQLite from 'react-native-sqlite-storage';
@@ -63,11 +64,13 @@ const Datas = ({navigation}) => {
             data = {getApi}
             keyExtractor={(item , index )=> index.toString()}
             renderItem={( {item} )=> (
-                <View style={{marginTop:9,borderWidth:2,width:270}}>
-                    <Text style={{fontSize:20,color:"black",paddingLeft:5}}>USER :{item.id}</Text>
-                    <Text style={{marginTop:3,paddingLeft:10,color:"black"}}>First Name : {item.first_name}</Text>
-                    <Text style={{paddingLeft:10,color:"black"}}>Last Name : {item.last_name}</Text>
+                <TouchableOpacity>
+                <View style={{ marginTop: 9, borderWidth: 2, width: 270 ,backgroundColor:"#219DEE"}}>
+                    <Text style={{ fontSize: 20, color: "black", paddingLeft: 5 }}>USER :{item.id}</Text>
+                    <Text style={{ marginTop: 3, paddingLeft: 10, color: "black" }}>First Name : {item.first_name}</Text>
+                    <Text style={{ paddingLeft: 10, color: "black" }}>Last Name : {item.last_name}</Text>
                 </View>
+                </TouchableOpacity>
             )}
             />
             
