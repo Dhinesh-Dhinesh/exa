@@ -31,6 +31,7 @@ export default function Transfer({navigation}) {
   useEffect(()=> {
       createTable();
       getDatas();
+      createChannel();
   }, []);
 
   const createTable = async () => {

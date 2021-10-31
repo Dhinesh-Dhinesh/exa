@@ -11,3 +11,10 @@ Import this files in store.js
 
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
+
+-----------------   ^^^^^   ---------Redux--------
+
+Refer this page for Push Notification
+link : https://www.npmjs.com/package/react-native-push-notification
+
+-----------------   ^^^^^   ---------Notification--------

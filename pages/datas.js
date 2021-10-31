@@ -11,6 +11,7 @@ import {
 import SQLite from 'react-native-sqlite-storage';
 import {useSelector, useDispatch} from 'react-redux';
 import {setEmail, setPass, getApiData} from "../redux/action";
+import PushNotification from 'react-native-push-notification';
 
 const db = SQLite.openDatabase(
     {
@@ -29,7 +30,17 @@ const Datas = ({navigation}) => {
     useEffect(()=>{
         getDatas();
         dispatch(getApiData());
+        createChannel();
     },[]);
+
+    const createChannel = () => {
+        PushNotification.createChannel(
+          {
+            channelId: "test-channel",
+            channelName: "Test Channel"
+          }
+        )
+      };
 
     const getDatas = async () => {
         try{
@@ -53,6 +64,14 @@ const Datas = ({navigation}) => {
         }
     }
 
+    const handleNotification = (item) => {
+        PushNotification.localNotification({
+            channelId: "test-channel",
+            title: "You clicked on " + item.first_name,
+            message: "User " + item.id + "\nLast Name :" + item.last_name,
+        })
+    }
+
     return(
         <View style={styles.cent}>
             <Text style={styles.txt}>Datas</Text>
@@ -64,7 +83,7 @@ const Datas = ({navigation}) => {
             data = {getApi}
             keyExtractor={(item , index )=> index.toString()}
             renderItem={( {item} )=> (
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=>{handleNotification(item)}}>
                 <View style={{ marginTop: 9, borderWidth: 2, width: 270 ,backgroundColor:"#219DEE"}}>
                     <Text style={{ fontSize: 20, color: "black", paddingLeft: 5 }}>USER :{item.id}</Text>
                     <Text style={{ marginTop: 3, paddingLeft: 10, color: "black" }}>First Name : {item.first_name}</Text>
