@@ -69,8 +69,19 @@ const Datas = ({navigation}) => {
             channelId: "test-channel",
             title: "You clicked on " + item.first_name,
             message: "User " + item.id + "\nLast Name :" + item.last_name,
+            id: 1 
         })
-    }
+    } 
+            /*--^^  If index is 1, only one notification only created
+                    if we pass the index parameter in handleNotification and
+                    renderitems > handlenotification
+                    code to be change for multiple notification :
+
+                    96 //! renderItem={( {item,index} ) => {} &
+                    97 //! <TouchableOpacity onPress={()=>{handleNotification(item,index)}}>
+                    72 //! id: index 
+
+            */
 
     return(
         <View style={styles.cent}>
