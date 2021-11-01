@@ -16,8 +16,8 @@ import SQLite from 'react-native-sqlite-storage';
 
   const db = SQLite.openDatabase(
     {
-        name:"datab.db",
-        createFromLocation: 1,
+        name:"exaDB",
+        location: "default",
     },
     () => {},
     error => {console.log(error)}
@@ -31,14 +31,13 @@ export default function Transfer({navigation}) {
   useEffect(()=> {
       createTable();
       getDatas();
-      createChannel();
   }, []);
 
   const createTable = async () => {
       await db.transaction((tx) => {
           tx.executeSql(
-              "CREATE TABLE IF NOT EXISTS"
-              +"Users"
+              "CREATE TABLE IF NOT EXISTS "
+              +"Users "
               +"(ID INTEGER PRIMARY KEY AUTOINCREMENT,Email TEXT,Pass TEXT);"
           )
       })

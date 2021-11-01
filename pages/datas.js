@@ -15,8 +15,8 @@ import PushNotification from 'react-native-push-notification';
 
 const db = SQLite.openDatabase(
     {
-        name:"datab.db",
-        createFromLocation: 1,
+        name:"exaDB",
+        location:"default",
     },
     () => {console.log("Success")},
     error => {console.log(error)}
