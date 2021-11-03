@@ -36,7 +36,7 @@ export default function Transfer({navigation}) {
   const createTable = async () => {
       await db.transaction((tx) => {
           tx.executeSql(
-              "CREATE TABLE IF NOT EXISTS "
+              "CREATE TABLE IF NOT EXISTS "              //spaces are important
               +"Users "
               +"(ID INTEGER PRIMARY KEY AUTOINCREMENT,Email TEXT,Pass TEXT);"
           )
